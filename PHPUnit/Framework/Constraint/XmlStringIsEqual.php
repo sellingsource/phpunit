@@ -48,10 +48,7 @@
  * Constraint that asserts that the XML string it is evaluated is equal to
  * a given string.
  *
- * Uses strpos() to find the position of the string in the input, if not found
- * the evaluaton fails.
- *
- * The sub-string is passed in the constructor.
+ * uses DOMDocument to make sure formatting is not an issue
  *
  * @package    PHPUnit
  * @subpackage Framework_Constraint

@@ -1626,6 +1626,17 @@ abstract class PHPUnit_Framework_Assert
     }
 
     /**
+     * Returns a PHPUnit_Framework_Constraint_XmlStringIsEqual matcher object.
+     *
+     * @param  string $xml
+     * @return PHPUnit_Framework_Constraint_XmlStringIsEqual
+     */
+    public static function XmlStringEqualTo($xml)
+    {
+        return new PHPUnit_Framework_Constraint_XmlStringIsEqual($xml);
+    }
+
+    /**
      * Asserts that two XML files are equal.
      *
      * @param  string $expectedFile
