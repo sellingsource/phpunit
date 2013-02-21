@@ -2736,6 +2736,51 @@ EOF
     }
 
     /**
+     * @covers PHPUnit_Framework_Constraint_XmlStringIsEqual
+     * @covers PHPUnit_Framework_Assert::XmlStringEqualTo
+     * @covers PHPUnit_Framework_TestFailure::exceptionToString
+     */
+    public function testConstraintXmlStringIsEqual()
+    {
+        $constraint = PHPUnit_Framework_Assert::XmlStringEqualTo(
+            <<<EOF
+<root>
+                <bing>bong</bing>
+    <something type="not">rocks</something></root>
+EOF
+        );
+
+
+
+        $this->assertTrue($constraint->evaluate(
+            '<root><bing>bong</bing><something type="not">rocks</something></root>',
+            '',
+            TRUE
+        ));
+
+        try {
+            $compared = '<root><bing>foobarbaz</bing><something>r</something></root>';
+            $constraint->evaluate($compared);
+        }
+
+        catch (PHPUnit_Framework_ExpectationFailedException $e) {
+            $this->assertEquals(
+                <<<EOF
+Failed asserting that '$compared' is equal to '<?xml version="1.0"?>
+<root>
+  <bing>bong</bing>
+  <something type="not">rocks</something>
+</root>
+'.
+
+EOF
+                ,
+                PHPUnit_Framework_TestFailure::exceptionToString($e)
+            );
+        }
+    }
+
+    /**
      * @covers PHPUnit_Framework_Constraint_StringContains
      * @covers PHPUnit_Framework_Assert::stringContains
      * @covers PHPUnit_Framework_Constraint::count
